@@ -10,6 +10,7 @@ import creditRoutes from "./routes/credit.routes";
 import shortlistRoutes from "./routes/shortlist.routes";
 import campaignRoutes from "./routes/campaign.routes";
 import analyticsRoutes from "./routes/analytics.routes";
+import dashboardRoutes from "./routes/dashboard.routes";
 
 import { errorHandler } from "./middleware/error.middleware";
 import { apiRateLimiter, strictRateLimiter } from "./middleware/rateLimit.middleware";
@@ -22,13 +23,14 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
-app.use("/api/users", authenticate, apiRateLimiter, userRoutes);
-app.use("/api/candidates", authenticate, apiRateLimiter, candidateRoutes);
-app.use("/api/search", authenticate, strictRateLimiter, searchRoutes);
-app.use("/api/credits", authenticate, strictRateLimiter, creditRoutes);
-app.use("/api/shortlist", authenticate, apiRateLimiter, shortlistRoutes);
-app.use("/api/campaigns", authenticate, apiRateLimiter, campaignRoutes);
-app.use("/api/analytics", authenticate, strictRateLimiter, analyticsRoutes);
+app.use("/api/dashboard", apiRateLimiter, authenticate, dashboardRoutes);
+app.use("/api/users", apiRateLimiter, authenticate, userRoutes);
+app.use("/api/candidates", apiRateLimiter, authenticate, candidateRoutes);
+app.use("/api/search", strictRateLimiter, authenticate, searchRoutes);
+app.use("/api/credits", strictRateLimiter, authenticate, creditRoutes);
+app.use("/api/shortlist", apiRateLimiter, authenticate, shortlistRoutes);
+app.use("/api/campaigns", apiRateLimiter, authenticate, campaignRoutes);
+app.use("/api/analytics", strictRateLimiter, authenticate, analyticsRoutes);
 
 app.use(errorHandler);
 
