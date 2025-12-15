@@ -27,10 +27,10 @@ export const getCampaignAnalytics = async (
   });
 
   const summary = {
-    delivered: events.filter(e => e.eventType === "DELIVERED").length,
-    opened: events.filter(e => e.eventType === "OPENED").length,
-    clicked: events.filter(e => e.eventType === "CLICKED").length,
-    replied: events.filter(e => e.eventType === "REPLIED").length
+    delivered: events.filter((e: any) => e.eventType === "DELIVERED").length,
+    opened: events.filter((e: any) => e.eventType === "OPENED").length,
+    clicked: events.filter((e: any) => e.eventType === "CLICKED").length,
+    replied: events.filter((e: any) => e.eventType === "REPLIED").length
   };
 
   res.json(summary);
